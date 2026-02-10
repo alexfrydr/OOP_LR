@@ -1,0 +1,153 @@
+<html>
+<head>
+<title>Main.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #7a7e85;}
+.s1 { color: #bcbec4;}
+.s2 { color: #cf8e6d;}
+.s3 { color: #bcbec4;}
+.s4 { color: #6aab73;}
+.s5 { color: #5f826b; font-style: italic;}
+.s6 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Main.java</font>
+</center></td></tr></table>
+<pre><span class="s0">// =============================================</span>
+<span class="s0">// Класс Sentence — основной класс для задания</span>
+<span class="s0">// =============================================</span>
+<span class="s2">class </span><span class="s1">Sentence </span><span class="s3">{</span>
+
+    <span class="s2">private final </span><span class="s1">String originalText</span><span class="s3">;</span>
+    <span class="s2">private final </span><span class="s1">String</span><span class="s3">[] </span><span class="s1">words</span><span class="s3">;           </span><span class="s0">// массив чистых слов</span>
+
+    <span class="s0">// Конструктор</span>
+    <span class="s2">public </span><span class="s1">Sentence</span><span class="s3">(</span><span class="s1">String text</span><span class="s3">) {</span>
+        <span class="s2">this</span><span class="s3">.</span><span class="s1">originalText </span><span class="s3">= </span><span class="s1">text </span><span class="s3">!= </span><span class="s2">null </span><span class="s3">? </span><span class="s1">text </span><span class="s3">: </span><span class="s4">&quot;&quot;</span><span class="s3">;</span>
+        <span class="s2">this</span><span class="s3">.</span><span class="s1">words </span><span class="s3">= </span><span class="s1">extractWordsStrict</span><span class="s3">(</span><span class="s2">this</span><span class="s3">.</span><span class="s1">originalText</span><span class="s3">);</span>
+    <span class="s3">}</span>
+
+    <span class="s5">/**</span>
+     <span class="s5">* Строгий метод выделения слов:</span>
+     <span class="s5">* слово = последовательность букв и цифр</span>
+     <span class="s5">* всё остальное (знаки препинания, пробелы и т.д.) — разделители</span>
+     <span class="s5">*/</span>
+    <span class="s2">private </span><span class="s1">String</span><span class="s3">[] </span><span class="s1">extractWordsStrict</span><span class="s3">(</span><span class="s1">String text</span><span class="s3">) {</span>
+        <span class="s1">java</span><span class="s3">.</span><span class="s1">util</span><span class="s3">.</span><span class="s1">List</span><span class="s3">&lt;</span><span class="s1">String</span><span class="s3">&gt; </span><span class="s1">result </span><span class="s3">= </span><span class="s2">new </span><span class="s1">java</span><span class="s3">.</span><span class="s1">util</span><span class="s3">.</span><span class="s1">ArrayList</span><span class="s3">&lt;&gt;();</span>
+
+        <span class="s1">StringBuilder currentWord </span><span class="s3">= </span><span class="s2">new </span><span class="s1">StringBuilder</span><span class="s3">();</span>
+
+        <span class="s2">for </span><span class="s3">(</span><span class="s2">int </span><span class="s1">i </span><span class="s3">= </span><span class="s6">0</span><span class="s3">; </span><span class="s1">i </span><span class="s3">&lt; </span><span class="s1">text</span><span class="s3">.</span><span class="s1">length</span><span class="s3">(); </span><span class="s1">i</span><span class="s3">++) {</span>
+            <span class="s2">char </span><span class="s1">c </span><span class="s3">= </span><span class="s1">text</span><span class="s3">.</span><span class="s1">charAt</span><span class="s3">(</span><span class="s1">i</span><span class="s3">);</span>
+
+            <span class="s0">// Если символ — буква или цифра → добавляем к текущему слову</span>
+            <span class="s2">if </span><span class="s3">(</span><span class="s1">Character</span><span class="s3">.</span><span class="s1">isLetter</span><span class="s3">(</span><span class="s1">c</span><span class="s3">) || </span><span class="s1">Character</span><span class="s3">.</span><span class="s1">isDigit</span><span class="s3">(</span><span class="s1">c</span><span class="s3">)) {</span>
+                <span class="s1">currentWord</span><span class="s3">.</span><span class="s1">append</span><span class="s3">(</span><span class="s1">c</span><span class="s3">);</span>
+            <span class="s3">}</span>
+            <span class="s0">// Иначе — конец слова</span>
+            <span class="s2">else </span><span class="s3">{</span>
+                <span class="s2">if </span><span class="s3">(!</span><span class="s1">currentWord</span><span class="s3">.</span><span class="s1">isEmpty</span><span class="s3">()) {</span>
+                    <span class="s1">result</span><span class="s3">.</span><span class="s1">add</span><span class="s3">(</span><span class="s1">currentWord</span><span class="s3">.</span><span class="s1">toString</span><span class="s3">());</span>
+                    <span class="s1">currentWord</span><span class="s3">.</span><span class="s1">setLength</span><span class="s3">(</span><span class="s6">0</span><span class="s3">);   </span><span class="s0">// очищаем</span>
+                <span class="s3">}</span>
+            <span class="s3">}</span>
+        <span class="s3">}</span>
+
+        <span class="s0">// Добавляем последнее слово, если оно есть</span>
+        <span class="s2">if </span><span class="s3">(!</span><span class="s1">currentWord</span><span class="s3">.</span><span class="s1">isEmpty</span><span class="s3">()) {</span>
+            <span class="s1">result</span><span class="s3">.</span><span class="s1">add</span><span class="s3">(</span><span class="s1">currentWord</span><span class="s3">.</span><span class="s1">toString</span><span class="s3">());</span>
+        <span class="s3">}</span>
+
+        <span class="s2">return </span><span class="s1">result</span><span class="s3">.</span><span class="s1">toArray</span><span class="s3">(</span><span class="s2">new </span><span class="s1">String</span><span class="s3">[</span><span class="s6">0</span><span class="s3">]);</span>
+    <span class="s3">}</span>
+
+    <span class="s5">/**</span>
+     <span class="s5">* Основной метод задания:</span>
+     <span class="s5">* Возвращает длину указанного слова или -1, если слово не найдено</span>
+     <span class="s5">*/</span>
+    <span class="s2">public int </span><span class="s1">getWordLength</span><span class="s3">(</span><span class="s1">String targetWord</span><span class="s3">) {</span>
+        <span class="s2">if </span><span class="s3">(</span><span class="s1">targetWord </span><span class="s3">== </span><span class="s2">null </span><span class="s3">|| </span><span class="s1">targetWord</span><span class="s3">.</span><span class="s1">trim</span><span class="s3">().</span><span class="s1">isEmpty</span><span class="s3">()) {</span>
+            <span class="s2">return </span><span class="s3">-</span><span class="s6">1</span><span class="s3">;</span>
+        <span class="s3">}</span>
+
+        <span class="s1">String search </span><span class="s3">= </span><span class="s1">targetWord</span><span class="s3">.</span><span class="s1">trim</span><span class="s3">().</span><span class="s1">toLowerCase</span><span class="s3">();</span>
+
+        <span class="s2">for </span><span class="s3">(</span><span class="s1">String word </span><span class="s3">: </span><span class="s1">words</span><span class="s3">) {</span>
+            <span class="s2">if </span><span class="s3">(</span><span class="s1">word</span><span class="s3">.</span><span class="s1">toLowerCase</span><span class="s3">().</span><span class="s1">equals</span><span class="s3">(</span><span class="s1">search</span><span class="s3">)) {</span>
+                <span class="s2">return </span><span class="s1">word</span><span class="s3">.</span><span class="s1">length</span><span class="s3">();</span>
+            <span class="s3">}</span>
+        <span class="s3">}</span>
+
+        <span class="s2">return </span><span class="s3">-</span><span class="s6">1</span><span class="s3">; </span><span class="s0">// слово не найдено</span>
+    <span class="s3">}</span>
+
+    <span class="s0">// Вспомогательный метод для отладки</span>
+    <span class="s2">public void </span><span class="s1">printAllWords</span><span class="s3">() {</span>
+        <span class="s1">System</span><span class="s3">.</span><span class="s1">out</span><span class="s3">.</span><span class="s1">println</span><span class="s3">(</span><span class="s4">&quot;Всего слов в предложении: &quot; </span><span class="s3">+ </span><span class="s1">words</span><span class="s3">.</span><span class="s1">length</span><span class="s3">);</span>
+        <span class="s2">for </span><span class="s3">(</span><span class="s2">int </span><span class="s1">i </span><span class="s3">= </span><span class="s6">0</span><span class="s3">; </span><span class="s1">i </span><span class="s3">&lt; </span><span class="s1">words</span><span class="s3">.</span><span class="s1">length</span><span class="s3">; </span><span class="s1">i</span><span class="s3">++) {</span>
+            <span class="s1">System</span><span class="s3">.</span><span class="s1">out</span><span class="s3">.</span><span class="s1">printf</span><span class="s3">(</span><span class="s4">&quot;%2d. </span><span class="s2">\&quot;</span><span class="s4">%s</span><span class="s2">\&quot;  </span><span class="s4">(длина = %d)%n&quot;</span><span class="s3">,</span>
+                    <span class="s1">i </span><span class="s3">+ </span><span class="s6">1</span><span class="s3">, </span><span class="s1">words</span><span class="s3">[</span><span class="s1">i</span><span class="s3">], </span><span class="s1">words</span><span class="s3">[</span><span class="s1">i</span><span class="s3">].</span><span class="s1">length</span><span class="s3">());</span>
+        <span class="s3">}</span>
+    <span class="s3">}</span>
+
+    <span class="s0">// Геттеры</span>
+    <span class="s2">public </span><span class="s1">String getOriginalText</span><span class="s3">() {</span>
+        <span class="s2">return </span><span class="s1">originalText</span><span class="s3">;</span>
+    <span class="s3">}</span>
+
+    <span class="s2">public </span><span class="s1">String</span><span class="s3">[] </span><span class="s1">getWords</span><span class="s3">() {</span>
+        <span class="s2">return </span><span class="s1">words</span><span class="s3">.</span><span class="s1">clone</span><span class="s3">(); </span><span class="s0">// защитная копия</span>
+    <span class="s3">}</span>
+<span class="s3">}</span>
+
+<span class="s0">// =============================================</span>
+<span class="s0">// Главный класс с методом main()</span>
+<span class="s0">// =============================================</span>
+<span class="s2">public class </span><span class="s1">Main </span><span class="s3">{</span>
+    <span class="s2">public static void </span><span class="s1">main</span><span class="s3">(</span><span class="s1">String</span><span class="s3">[] </span><span class="s1">args</span><span class="s3">) {</span>
+
+        <span class="s1">System</span><span class="s3">.</span><span class="s1">out</span><span class="s3">.</span><span class="s1">println</span><span class="s3">(</span><span class="s4">&quot;=== Лабораторная работа: Длина слова в предложении ===</span><span class="s2">\n</span><span class="s4">&quot;</span><span class="s3">);</span>
+
+        <span class="s0">// ==================== Тест 1 ====================</span>
+        <span class="s1">String text1 </span><span class="s3">= </span><span class="s4">&quot;Мама, мыла раму. Рама мыла маму!&quot;</span><span class="s3">;</span>
+        <span class="s1">String word1 </span><span class="s3">= </span><span class="s4">&quot;раму&quot;</span><span class="s3">;</span>
+
+        <span class="s1">Sentence sentence1 </span><span class="s3">= </span><span class="s2">new </span><span class="s1">Sentence</span><span class="s3">(</span><span class="s1">text1</span><span class="s3">);</span>
+        <span class="s2">int </span><span class="s1">len1 </span><span class="s3">= </span><span class="s1">sentence1</span><span class="s3">.</span><span class="s1">getWordLength</span><span class="s3">(</span><span class="s1">word1</span><span class="s3">);</span>
+
+        <span class="s1">System</span><span class="s3">.</span><span class="s1">out</span><span class="s3">.</span><span class="s1">println</span><span class="s3">(</span><span class="s4">&quot;Предложение: &quot; </span><span class="s3">+ </span><span class="s1">text1</span><span class="s3">);</span>
+        <span class="s1">System</span><span class="s3">.</span><span class="s1">out</span><span class="s3">.</span><span class="s1">println</span><span class="s3">(</span><span class="s4">&quot;Ищем слово: </span><span class="s2">\&quot;</span><span class="s4">&quot; </span><span class="s3">+ </span><span class="s1">word1 </span><span class="s3">+ </span><span class="s4">&quot;</span><span class="s2">\&quot;</span><span class="s4">&quot;</span><span class="s3">);</span>
+        <span class="s2">if </span><span class="s3">(</span><span class="s1">len1 </span><span class="s3">!= -</span><span class="s6">1</span><span class="s3">) {</span>
+            <span class="s1">System</span><span class="s3">.</span><span class="s1">out</span><span class="s3">.</span><span class="s1">println</span><span class="s3">(</span><span class="s4">&quot;→ Длина слова = &quot; </span><span class="s3">+ </span><span class="s1">len1 </span><span class="s3">+ </span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">&quot;</span><span class="s3">);</span>
+        <span class="s3">} </span><span class="s2">else </span><span class="s3">{</span>
+            <span class="s1">System</span><span class="s3">.</span><span class="s1">out</span><span class="s3">.</span><span class="s1">println</span><span class="s3">(</span><span class="s4">&quot;→ Слово не найдено</span><span class="s2">\n</span><span class="s4">&quot;</span><span class="s3">);</span>
+        <span class="s3">}</span>
+
+        <span class="s0">// ==================== Тест 2 ====================</span>
+        <span class="s1">String text2 </span><span class="s3">= </span><span class="s4">&quot;Привет, как дела? Всё хорошо, спасибо! А у тебя?&quot;</span><span class="s3">;</span>
+        <span class="s1">String word2 </span><span class="s3">= </span><span class="s4">&quot;хорошо&quot;</span><span class="s3">;</span>
+
+        <span class="s1">Sentence sentence2 </span><span class="s3">= </span><span class="s2">new </span><span class="s1">Sentence</span><span class="s3">(</span><span class="s1">text2</span><span class="s3">);</span>
+        <span class="s2">int </span><span class="s1">len2 </span><span class="s3">= </span><span class="s1">sentence2</span><span class="s3">.</span><span class="s1">getWordLength</span><span class="s3">(</span><span class="s1">word2</span><span class="s3">);</span>
+
+        <span class="s1">System</span><span class="s3">.</span><span class="s1">out</span><span class="s3">.</span><span class="s1">println</span><span class="s3">(</span><span class="s4">&quot;Предложение: &quot; </span><span class="s3">+ </span><span class="s1">text2</span><span class="s3">);</span>
+        <span class="s1">System</span><span class="s3">.</span><span class="s1">out</span><span class="s3">.</span><span class="s1">println</span><span class="s3">(</span><span class="s4">&quot;Ищем слово: </span><span class="s2">\&quot;</span><span class="s4">&quot; </span><span class="s3">+ </span><span class="s1">word2 </span><span class="s3">+ </span><span class="s4">&quot;</span><span class="s2">\&quot;</span><span class="s4">&quot;</span><span class="s3">);</span>
+        <span class="s1">System</span><span class="s3">.</span><span class="s1">out</span><span class="s3">.</span><span class="s1">println</span><span class="s3">(</span><span class="s4">&quot;→ Длина слова = &quot; </span><span class="s3">+ </span><span class="s1">len2 </span><span class="s3">+ </span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">&quot;</span><span class="s3">);</span>
+
+        <span class="s0">// ==================== Тест 3 (слово не найдено) ====================</span>
+        <span class="s2">int </span><span class="s1">len3 </span><span class="s3">= </span><span class="s1">sentence2</span><span class="s3">.</span><span class="s1">getWordLength</span><span class="s3">(</span><span class="s4">&quot;котик&quot;</span><span class="s3">);</span>
+        <span class="s1">System</span><span class="s3">.</span><span class="s1">out</span><span class="s3">.</span><span class="s1">println</span><span class="s3">(</span><span class="s4">&quot;Ищем слово </span><span class="s2">\&quot;</span><span class="s4">котик</span><span class="s2">\&quot; </span><span class="s4">→ &quot; </span><span class="s3">+</span>
+                <span class="s3">(</span><span class="s1">len3 </span><span class="s3">== -</span><span class="s6">1 </span><span class="s3">? </span><span class="s4">&quot;не найдено&quot; </span><span class="s3">: </span><span class="s4">&quot;длина = &quot; </span><span class="s3">+ </span><span class="s1">len3</span><span class="s3">));</span>
+
+        <span class="s0">// Дополнительно: вывод всех слов</span>
+        <span class="s1">System</span><span class="s3">.</span><span class="s1">out</span><span class="s3">.</span><span class="s1">println</span><span class="s3">(</span><span class="s4">&quot;</span><span class="s2">\n</span><span class="s4">--- Все слова из второго предложения ---&quot;</span><span class="s3">);</span>
+        <span class="s1">sentence2</span><span class="s3">.</span><span class="s1">printAllWords</span><span class="s3">();</span>
+    <span class="s3">}</span>
+<span class="s3">}</span></pre>
+</body>
+</html>
